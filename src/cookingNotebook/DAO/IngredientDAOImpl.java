@@ -57,8 +57,11 @@ public class IngredientDAOImpl implements IngredientDAO {
 
 	@Override
 	public int save(Ingredient t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		IngredientDAO iDAO = new IngredientDAOImpl();
+		List<Ingredient> il = iDAO.getAll();
+		if(il.contains(t)) update(t);
+		else insert(t);
+		return 1;
 	}
 
 	@Override
