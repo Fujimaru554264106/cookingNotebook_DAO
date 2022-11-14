@@ -18,14 +18,35 @@ public class StepDAOImpl implements StepDAO {
 
 	@Override
 	public List<Step> getAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = Database.getConnection();
+		List<Step> sl = null;
+		String sql = "SELECT * FROM Tb3_Step";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		if(rs != null) {
+			sl = new ArrayList<Step>();
+			while(rs.next()) {
+				int id = rs.getInt("FoodID");
+				int index = rs.getInt("StepIndex");
+				String content = rs.getString("StepContent");
+				String img = rs.getString("StepImage");
+				Step s = new Step(id, index, content, img);
+				sl.add(s);
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		return sl;
 	}
 
 	@Override
 	public int save(Step t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		StepDAO sDAO = new StepDAOImpl();
+		List<Step> sl = sDAO.getAll();
+		if(sl.contains(t)) update(t);
+		else insert(t);
+		return 1;
 	}
 
 	@Override
@@ -46,7 +67,7 @@ public class StepDAOImpl implements StepDAO {
 	@Override
 	public int update(Step t) throws SQLException {
 		Connection con = Database.getConnection();
-		String sql = "UPDATE Tb3_Step SET StepContent = ?, StepIMG = ? WHERE FoodID = ? AND StepIndex = ?";
+		String sql = "UPDATE Tb3_Step SET StepContent = ?, StepImage = ? WHERE FoodID = ? AND StepIndex = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, t.getContent());
 		ps.setString(2, t.getImg());
@@ -86,7 +107,7 @@ public class StepDAOImpl implements StepDAO {
 				int id = rs.getInt("FoodID");
 				int index = rs.getInt("StepIndex");
 				String content = rs.getString("StepContent");
-				String img = rs.getString("StepIMG");
+				String img = rs.getString("StepImage");
 				Step s = new Step(id, index, content, img);
 				sl.add(s);
 			}
