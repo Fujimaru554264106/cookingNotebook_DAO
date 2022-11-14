@@ -165,7 +165,8 @@ public class FoodDAOImpl implements FoodDAO {
 		IngredientDAO ingrDAO = new IngredientDAOImpl();
 		FoodIngrDAO fiDAO = new FoodIngrDAOImpl();
 		try {
-			ingrDAO.insert(i);
+			List<Ingredient> il = ingrDAO.getAll();
+			if(!il.contains(i)) ingrDAO.insert(i);
 			fiDAO.insertAmount(f.getId(), i.getId(), amount);
 			return 1;
 		} catch (SQLException e) {
