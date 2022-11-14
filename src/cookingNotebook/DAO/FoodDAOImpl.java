@@ -59,8 +59,11 @@ public class FoodDAOImpl implements FoodDAO {
 
 	@Override
 	public int save(Food t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		FoodDAO fDAO = new FoodDAOImpl();
+		List<Food> fl = fDAO.getAll();
+		if(fl.contains(t)) update(t);
+		else insert(t);
+		return 1;
 	}
 
 	@Override
