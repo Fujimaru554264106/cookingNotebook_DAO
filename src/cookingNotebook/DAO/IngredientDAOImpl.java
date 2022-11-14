@@ -33,8 +33,26 @@ public class IngredientDAOImpl implements IngredientDAO {
 
 	@Override
 	public List<Ingredient> getAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = Database.getConnection();
+		List<Ingredient> il = null;
+		String sql = "SELECT * FROM Tb2_Ingredient";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		if(rs != null) {
+			il = new ArrayList<Ingredient>();
+			while(rs.next()) {
+				int id = rs.getInt("IngrID");
+				String name = rs.getString("IngrName");
+				int ha = rs.getInt("HasAmount");
+				String unit = rs.getString("Unit");
+				Ingredient i = new Ingredient(id, name, ha, unit);
+				il.add(i);
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		return il;
 	}
 
 	@Override
