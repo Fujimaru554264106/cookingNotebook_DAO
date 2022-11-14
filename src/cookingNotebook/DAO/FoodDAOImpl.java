@@ -72,7 +72,6 @@ public class FoodDAOImpl implements FoodDAO {
 		ps.setInt(2, t.getCooktime());
 		ps.setString(3, t.getCategory());
 		ps.setString(4, t.getImg());
-		ps.setInt(5, t.getId());
 		int result = ps.executeUpdate();
 		ps.close();
 		con.close();
