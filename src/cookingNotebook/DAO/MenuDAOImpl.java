@@ -53,8 +53,11 @@ public class MenuDAOImpl implements MenuDAO {
 
 	@Override
 	public int save(Menu t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		MenuDAO mDAO = new MenuDAOImpl();
+		List<Menu> ml = mDAO.getAll();
+		if(ml.contains(t)) update(t);
+		else insert(t);
+		return 1;
 	}
 
 	@Override
