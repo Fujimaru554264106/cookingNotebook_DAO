@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+
+<AnchorPane fx:id="addFoodView" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookingNotebook.controllers.AddFoodController">
+   <children>
+      <Button layoutX="40.0" layoutY="18.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="40.0" text="&lt;" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="307.0" layoutY="8.0" prefHeight="61.0" prefWidth="187.0" style="-fx-font-size: 35;" text="Add Food" />
+      <ScrollPane layoutX="1.0" layoutY="78.0" prefHeight="351.0" prefWidth="800.0">
+         <content>
+            <TilePane prefHeight="352.0" prefWidth="787.0">
+               <children>
+                  <Label text="Type:" />
+                  <Label fx:id="labelType" prefHeight="25.0" prefWidth="100.0" />
+               </children>
+            </TilePane>
+         </content>
+      </ScrollPane>
+      <Button layoutX="697.0" layoutY="441.0" mnemonicParsing="false" onAction="#add" text="Add" />
+   </children>
+   <stylesheets>
+      <URL value="@../css/All.css" />
+      <URL value="@../css/Food.css" />
+   </stylesheets>
+</AnchorPane>
