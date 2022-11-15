@@ -68,11 +68,11 @@ public class IngredientDAOImpl implements IngredientDAO {
 				l.add(rs.getInt("IngrID"));
 			}
 		}
-		if(l.contains(t.getId())) update(t);
-		else insert(t);
 		rs.close();
 		ps.close();
 		con.close();
+		if(l.contains(t.getId())) update(t);
+		else insert(t);
 		return 1;
 	}
 
