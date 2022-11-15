@@ -285,4 +285,28 @@ public class FoodDAOImpl implements FoodDAO {
 		}
 	}
 	
+	@Override
+	public int saveFood(Food f, List<Ingredient> il, List<Step> sl, List<FoodIngr> fil) {
+		FoodDAO fDAO = new FoodDAOImpl();
+		IngredientDAO iDAO = new IngredientDAOImpl();
+		StepDAO sDAO = new StepDAOImpl();
+		FoodIngrDAO fiDAO = new FoodIngrDAOImpl();
+		try {
+			fDAO.save(f);
+			for(Ingredient i : il) {
+				iDAO.save(i);
+			}
+			for(FoodIngr fi : fil) {
+				fiDAO.save(fi);
+			}
+			for(Step s : sl) {
+				sDAO.save(s);
+			}
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 }
