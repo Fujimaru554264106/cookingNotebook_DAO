@@ -193,7 +193,7 @@ public class FoodDAOImpl implements FoodDAO {
 	public int addStep(Step s) {
 		StepDAO stepDAO = new StepDAOImpl();
 		try {
-			stepDAO.save(s);
+			stepDAO.insert(s);
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
