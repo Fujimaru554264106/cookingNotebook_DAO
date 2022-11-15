@@ -17,5 +17,6 @@ public interface FoodDAO extends DAO<Food> {
 	public int addStep(Step s);
 	public int updateStep(Step s);
 	public int removeStep(Step s);
+	public int saveStep(Step s);
 	
 }
