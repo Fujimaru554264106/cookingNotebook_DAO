@@ -42,10 +42,25 @@ public class StepDAOImpl implements StepDAO {
 
 	@Override
 	public int save(Step t) throws SQLException {
-		StepDAO sDAO = new StepDAOImpl();
-		List<Step> sl = sDAO.getAll();
-		if(sl.contains(t)) update(t);
+		Connection con = Database.getConnection();
+		String sql = "SELECT FoodID, StepIndex FROM Tb3_Step";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> fidl = null;
+		List<Integer> sidl = null;
+		if(rs != null) {
+			fidl = new ArrayList<Integer>();
+			sidl = new ArrayList<Integer>();
+			while(rs.next()) {
+				fidl.add(rs.getInt("FoodID"));
+				sidl.add(rs.getInt("IngrID"));
+			}
+		}
+		if(fidl.contains(t.getId()) && sidl.contains(t.getIndex())) update(t);
 		else insert(t);
+		rs.close();
+		ps.close();
+		con.close();
 		return 1;
 	}
 
