@@ -59,9 +59,21 @@ public class FoodDAOImpl implements FoodDAO {
 
 	@Override
 	public int save(Food t) throws SQLException {
-		FoodDAO fDAO = new FoodDAOImpl();
-		List<Food> fl = fDAO.getAll();
-		if(fl.contains(t)) update(t);
+		Connection con = Database.getConnection();
+		String sql = "SELECT FoodID FROM Tb1_Food";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> idl = null;
+		if(rs != null) {
+			idl = new ArrayList<Integer>();
+			while(rs.next()) {
+				idl.add(rs.getInt("FoodID"));
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		if(idl.contains(t.getId())) update(t);
 		else insert(t);
 		return 1;
 	}
