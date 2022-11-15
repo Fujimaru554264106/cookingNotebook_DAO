@@ -56,11 +56,11 @@ public class StepDAOImpl implements StepDAO {
 				sidl.add(rs.getInt("IngrID"));
 			}
 		}
-		if(fidl.contains(t.getId()) && sidl.contains(t.getIndex())) update(t);
-		else insert(t);
 		rs.close();
 		ps.close();
 		con.close();
+		if(fidl.contains(t.getId()) && sidl.contains(t.getIndex())) update(t);
+		else insert(t);
 		return 1;
 	}
 
