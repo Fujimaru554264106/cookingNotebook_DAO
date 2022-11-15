@@ -168,8 +168,7 @@ public class FoodDAOImpl implements FoodDAO {
 		IngredientDAO ingrDAO = new IngredientDAOImpl();
 		FoodIngrDAO fiDAO = new FoodIngrDAOImpl();
 		try {
-			List<Ingredient> il = ingrDAO.getAll();
-			if(!il.contains(i)) ingrDAO.insert(i);
+			ingrDAO.save(i);
 			fiDAO.insertAmount(f.getId(), i.getId(), amount);
 			return 1;
 		} catch (SQLException e) {
@@ -194,7 +193,7 @@ public class FoodDAOImpl implements FoodDAO {
 	public int addStep(Step s) {
 		StepDAO stepDAO = new StepDAOImpl();
 		try {
-			stepDAO.insert(s);
+			stepDAO.save(s);
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
