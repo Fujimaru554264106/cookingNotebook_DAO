@@ -7,6 +7,7 @@ public interface FoodDAO extends DAO<Food> {
 
 	public List<Food> getFoodInCategory(String category) throws SQLException;
 	public Food getFood(String name) throws SQLException;
+	public int saveFood(Food f, List<Ingredient> il, List<Step> sl, List<FoodIngr> fil);
 	
 	public List<Ingredient> getIngredientList(Food t) throws SQLException;
 	public int addIngredient(Food f, Ingredient i, double amount);
