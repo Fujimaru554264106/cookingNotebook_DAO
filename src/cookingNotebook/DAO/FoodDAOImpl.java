@@ -261,4 +261,16 @@ public class FoodDAOImpl implements FoodDAO {
 		return f;
 	}
 	
+	@Override
+	public int saveStep(Step s) {
+		StepDAO sDAO = new StepDAOImpl();
+		try {
+			sDAO.save(s);
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 1;
+		}
+	}
+	
 }
