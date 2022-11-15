@@ -143,4 +143,27 @@ public class IngredientDAOImpl implements IngredientDAO {
 		return il;
 	}
 
+	@Override
+	public Ingredient getIngredient(String name) throws SQLException {
+		Connection con = Database.getConnection();
+		Ingredient i = null;
+		String sql = "SELECT * FROM Tb2_Ingredient WHERE IngrName = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, name);
+		ResultSet rs = ps.executeQuery();
+		if(rs != null) {
+			while(rs.next()) {
+				int id = rs.getInt("IngrID");
+				String iname = rs.getString("IngrName");
+				int ha = rs.getInt("HasAmount");
+				String unit = rs.getString("Unit");
+				i = new Ingredient(id, iname, ha, unit);
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		return i;
+	}
+	
 }
