@@ -70,6 +70,9 @@ public class IngredientDAOImpl implements IngredientDAO {
 		}
 		if(l.contains(t.getId())) update(t);
 		else insert(t);
+		rs.close();
+		ps.close();
+		con.close();
 		return 1;
 	}
 
