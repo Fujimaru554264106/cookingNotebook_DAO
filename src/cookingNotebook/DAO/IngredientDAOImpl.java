@@ -57,9 +57,18 @@ public class IngredientDAOImpl implements IngredientDAO {
 
 	@Override
 	public int save(Ingredient t) throws SQLException {
-		IngredientDAO iDAO = new IngredientDAOImpl();
-		List<Ingredient> il = iDAO.getAll();
-		if(il.contains(t)) update(t);
+		Connection con = Database.getConnection();
+		String sql = "SELECT IngrID FROM Tb2_Ingredient";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> l = null;
+		if(rs != null) {
+			l = new ArrayList<Integer>();
+			while(rs.next()) {
+				l.add(rs.getInt("IngrID"));
+			}
+		}
+		if(l.contains(t.getId())) update(t);
 		else insert(t);
 		return 1;
 	}
