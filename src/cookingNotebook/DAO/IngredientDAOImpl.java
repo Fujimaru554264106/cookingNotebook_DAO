@@ -165,5 +165,9 @@ public class IngredientDAOImpl implements IngredientDAO {
 		con.close();
 		return i;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 }
