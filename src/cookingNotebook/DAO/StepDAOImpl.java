@@ -42,9 +42,24 @@ public class StepDAOImpl implements StepDAO {
 
 	@Override
 	public int save(Step t) throws SQLException {
-		StepDAO sDAO = new StepDAOImpl();
-		List<Step> sl = sDAO.getAll();
-		if(sl.contains(t)) update(t);
+		Connection con = Database.getConnection();
+		String sql = "SELECT FoodID, StepIndex FROM Tb3_Step";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> fidl = null;
+		List<Integer> sidl = null;
+		if(rs != null) {
+			fidl = new ArrayList<Integer>();
+			sidl = new ArrayList<Integer>();
+			while(rs.next()) {
+				fidl.add(rs.getInt("FoodID"));
+				sidl.add(rs.getInt("IngrID"));
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		if(fidl.contains(t.getId()) && sidl.contains(t.getIndex())) update(t);
 		else insert(t);
 		return 1;
 	}
@@ -67,12 +82,11 @@ public class StepDAOImpl implements StepDAO {
 	@Override
 	public int update(Step t) throws SQLException {
 		Connection con = Database.getConnection();
-		String sql = "UPDATE Tb3_Step SET StepContent = ?, StepImage = ? WHERE FoodID = ? AND StepIndex = ?";
+		String sql = "UPDATE Tb3_Step SET StepContent = ?, StepImage = ? WHERE StepIndex = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, t.getContent());
 		ps.setString(2, t.getImg());
-		ps.setInt(3, t.getId());
-		ps.setInt(4, t.getIndex());
+		ps.setInt(3, t.getIndex());
 		int result = ps.executeUpdate();
 		ps.close();
 		con.close();
@@ -82,10 +96,9 @@ public class StepDAOImpl implements StepDAO {
 	@Override
 	public int delete(Step t) throws SQLException {
 		Connection con = Database.getConnection();
-		String sql = "DELETE FROM Tb3_Step WHERE FoodID = ? AND StepIndex = ?";
+		String sql = "DELETE FROM Tb3_Step WHERE StepIndex = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, t.getId());
-		ps.setInt(2, t.getIndex());
+		ps.setInt(1, t.getIndex());
 		int result = ps.executeUpdate();
 		ps.close();
 		con.close();

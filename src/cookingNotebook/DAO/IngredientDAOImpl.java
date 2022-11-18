@@ -57,9 +57,21 @@ public class IngredientDAOImpl implements IngredientDAO {
 
 	@Override
 	public int save(Ingredient t) throws SQLException {
-		IngredientDAO iDAO = new IngredientDAOImpl();
-		List<Ingredient> il = iDAO.getAll();
-		if(il.contains(t)) update(t);
+		Connection con = Database.getConnection();
+		String sql = "SELECT IngrID FROM Tb2_Ingredient";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> l = null;
+		if(rs != null) {
+			l = new ArrayList<Integer>();
+			while(rs.next()) {
+				l.add(rs.getInt("IngrID"));
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		if(l.contains(t.getId())) update(t);
 		else insert(t);
 		return 1;
 	}
@@ -129,6 +141,29 @@ public class IngredientDAOImpl implements IngredientDAO {
 		ps.close();
 		con.close();
 		return il;
+	}
+
+	@Override
+	public Ingredient getIngredient(String name) throws SQLException {
+		Connection con = Database.getConnection();
+		Ingredient i = null;
+		String sql = "SELECT * FROM Tb2_Ingredient WHERE IngrName = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, name);
+		ResultSet rs = ps.executeQuery();
+		if(rs != null) {
+			while(rs.next()) {
+				int id = rs.getInt("IngrID");
+				String iname = rs.getString("IngrName");
+				int ha = rs.getInt("HasAmount");
+				String unit = rs.getString("Unit");
+				i = new Ingredient(id, iname, ha, unit);
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		return i;
 	}
 
 }

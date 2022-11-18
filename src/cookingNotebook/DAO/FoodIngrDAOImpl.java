@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodIngrDAOImpl implements FoodIngrDAO {
@@ -23,8 +24,26 @@ public class FoodIngrDAOImpl implements FoodIngrDAO {
 
 	@Override
 	public int save(FoodIngr t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = Database.getConnection();
+		String sql = "SELECT FoodID, IngrID FROM R1_Food_Ingredient";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Integer> fidl = null;
+		List<Integer> iidl = null;
+		if(rs != null) {
+			fidl = new ArrayList<Integer>();
+			iidl = new ArrayList<Integer>();
+			while(rs.next()) {
+				fidl.add(rs.getInt("FoodID"));
+				iidl.add(rs.getInt("IngrID"));
+			}
+		}
+		rs.close();
+		ps.close();
+		con.close();
+		if(fidl.contains(t.getFid()) && iidl.contains(t.getIid())) update(t);
+		else insert(t);
+		return 1;
 	}
 
 	@Override
