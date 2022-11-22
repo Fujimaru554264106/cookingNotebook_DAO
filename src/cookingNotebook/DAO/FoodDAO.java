@@ -19,8 +19,5 @@ public interface FoodDAO extends DAO<Food> {
 	public int updateStep(Step s);
 	public int removeStep(Step s);
 	public int saveStep(Step s);
-<<<<<<< HEAD
-=======
-	
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
+
 }
