@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-	private static String url = "jdbc:sqlite:CookNotebookDB.db";
+	private static String url = "jdbc:sqlite:CookNotebookDB(ver2).db";
 	private static String user = "root";
 	private static String password = "pass";
 	
