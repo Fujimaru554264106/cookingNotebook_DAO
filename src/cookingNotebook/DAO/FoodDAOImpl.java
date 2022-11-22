@@ -60,16 +60,6 @@ public class FoodDAOImpl implements FoodDAO {
 	@Override // save Food using FoodName
 	public int save(Food t) throws SQLException {
 		Connection con = Database.getConnection();
-<<<<<<< HEAD
-		String sql = "SELECT FoodName FROM Tb1_Food";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		List<String> fnl = null;
-		if(rs != null) {
-			fnl = new ArrayList<String>();
-			while(rs.next()) {
-				fnl.add(rs.getString("FoodName"));
-=======
 		String sql = "SELECT FoodID FROM Tb1_Food";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
@@ -78,17 +68,12 @@ public class FoodDAOImpl implements FoodDAO {
 			idl = new ArrayList<Integer>();
 			while(rs.next()) {
 				idl.add(rs.getInt("FoodID"));
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 			}
 		}
 		rs.close();
 		ps.close();
 		con.close();
-<<<<<<< HEAD
-		if(fnl.contains(t.getName())) update(t);
-=======
 		if(idl.contains(t.getId())) update(t);
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 		else insert(t);
 		return 1;
 	}
@@ -287,13 +272,8 @@ public class FoodDAOImpl implements FoodDAO {
 		con.close();
 		return f;
 	}
-<<<<<<< HEAD
-
-	@Override // save Step
-=======
 	
 	@Override
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 	public int saveStep(Step s) {
 		StepDAO sDAO = new StepDAOImpl();
 		try {
@@ -304,13 +284,8 @@ public class FoodDAOImpl implements FoodDAO {
 			return 1;
 		}
 	}
-<<<<<<< HEAD
-
-	@Override // save Food
-=======
 	
 	@Override
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 	public int saveFood(Food f, List<Ingredient> il, List<Step> sl, List<FoodIngr> fil) {
 		FoodDAO fDAO = new FoodDAOImpl();
 		IngredientDAO iDAO = new IngredientDAOImpl();
@@ -333,9 +308,5 @@ public class FoodDAOImpl implements FoodDAO {
 			return 0;
 		}
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 1165cea000942cc290653802c5a756582a33b3c1
 }
